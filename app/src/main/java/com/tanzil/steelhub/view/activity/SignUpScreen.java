@@ -3,18 +3,23 @@ package com.tanzil.steelhub.view.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -22,16 +27,22 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.tanzil.steelhub.R;
 import com.tanzil.steelhub.customUi.MyButton;
 import com.tanzil.steelhub.customUi.MyEditText;
+import com.tanzil.steelhub.customUi.MyTextView;
 import com.tanzil.steelhub.model.AuthManager;
+import com.tanzil.steelhub.model.Brands;
 import com.tanzil.steelhub.model.ModelManager;
+import com.tanzil.steelhub.model.States;
 import com.tanzil.steelhub.pushnotification.QuickstartPreferences;
 import com.tanzil.steelhub.pushnotification.RegistrationIntentService;
 import com.tanzil.steelhub.utility.GPSTracker;
 import com.tanzil.steelhub.utility.Preferences;
 import com.tanzil.steelhub.utility.STLog;
 import com.tanzil.steelhub.utility.Utils;
+import com.tanzil.steelhub.view.adapter.CommonDialogAdapter;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 
@@ -47,6 +58,9 @@ public class SignUpScreen extends Activity implements View.OnClickListener {
     private AuthManager authManager;
     private double lat = 0.000, lng = 0.000;
     private GPSTracker gps;
+    private ArrayList<States> statesArrayList;
+    private ArrayList<Brands> brandsArrayList;
+    private String stateId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +110,14 @@ public class SignUpScreen extends Activity implements View.OnClickListener {
         if (lat == 0.000 || lng == 0.000)
             getLatLong();
 
+        if (brandsArrayList == null) {
+//            Utils.showLoading(activity, activity.getString(R.string.please_wait));
+            ModelManager.getInstance().getCommonDataManager().getBrands(activity, true);
+        }
+        if (statesArrayList == null) {
+//            Utils.showLoading(activity, activity.getString(R.string.please_wait));
+            ModelManager.getInstance().getCommonDataManager().getStates(activity, true);
+        }
 
         et_Email = (MyEditText) findViewById(R.id.et_email);
         et_Password = (MyEditText) findViewById(R.id.et_password);
@@ -174,6 +196,70 @@ public class SignUpScreen extends Activity implements View.OnClickListener {
         return true;
     }
 
+    private void showDropDownDialog(final int type, final MyEditText et_myText) {
+        final Dialog dropDownDialog = new Dialog(activity);
+        dropDownDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dropDownDialog.setContentView(R.layout.dialog_dropdown_list);
+        dropDownDialog.getWindow().setBackgroundDrawable(
+                new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        MyTextView titleView = (MyTextView) dropDownDialog
+                .findViewById(R.id.title_name);
+        titleView.setText(activity.getString(R.string.please_select_an_option));
+        final ListView listView = (ListView) dropDownDialog
+                .findViewById(R.id.list_view);
+
+        ArrayList<String> list = new ArrayList<>();
+        if (type == 0) {
+            if (brandsArrayList != null)
+                if (brandsArrayList.size() > 0)
+                    for (int i = 0; i < brandsArrayList.size(); i++)
+                        list.add(brandsArrayList.get(i).getName());
+                else {
+                    Utils.showMessage(activity, activity.getString(R.string.no_record_found));
+                    return;
+                }
+            else {
+                Utils.showMessage(activity, activity.getString(R.string.no_record_found));
+                return;
+            }
+        } else if (type == 3) {
+            if (statesArrayList != null)
+                if (statesArrayList.size() > 0)
+                    for (int i = 0; i < statesArrayList.size(); i++)
+                        list.add(statesArrayList.get(i).getName());
+                else {
+                    Utils.showMessage(activity, activity.getString(R.string.no_record_found));
+                    return;
+                }
+            else {
+                Utils.showMessage(activity, activity.getString(R.string.no_record_found));
+                return;
+            }
+        }
+        CommonDialogAdapter commonDialogAdapter = new CommonDialogAdapter(
+                activity, list);
+        listView.setAdapter(commonDialogAdapter);
+        commonDialogAdapter.notifyDataSetChanged();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // TODO Auto-generated method stub
+                if (type == 3) {
+                    et_myText.setText(statesArrayList.get(position).getName());
+                    stateId = statesArrayList.get(position).getCode();
+                } else if (type == 4) {
+                    et_myText.setText(brandsArrayList.get(position).getName());
+//                    brandId = brandsArrayList.get(position).getId();
+                }
+                dropDownDialog.dismiss();
+            }
+        });
+
+        dropDownDialog.show();
+    }
 
     @Override
     public void onClick(View v) {
@@ -231,13 +317,13 @@ public class SignUpScreen extends Activity implements View.OnClickListener {
                         post_data.put("name", et_Name.getText().toString().trim());
                         post_data.put("contact", et_Contact.getText().toString().trim());
                         post_data.put("address", et_Address.getText().toString().trim());
-                        post_data.put("state", et_State.getText().toString().trim());
+                        post_data.put("state", stateId);
                         post_data.put("city", et_City.getText().toString().trim());
                         post_data.put("zip", et_Zip.getText().toString().trim());
                         post_data.put("tin", et_Tin.getText().toString().trim());
-//                        post_data.put("brand", et_Name.getText().toString().trim());
+                        post_data.put("brand", "");
                         post_data.put("company_name", et_Company.getText().toString().trim());
-                        post_data.put("role", "buyer");
+                        post_data.put("role", "seller");
                         post_data.put("pan", et_Pan.getText().toString().trim());
                         post_data.put("latitude", lat);
                         post_data.put("longitude", lng);
@@ -270,7 +356,25 @@ public class SignUpScreen extends Activity implements View.OnClickListener {
     }
 
     public void onEventMainThread(String message) {
-        if (message.equalsIgnoreCase("Register True")) {
+        if (message.equalsIgnoreCase("GetBrandList True")) {
+            Utils.dismissLoading();
+            brandsArrayList = ModelManager.getInstance().getCommonDataManager().getBrands(activity, false);
+            STLog.e(TAG, "GetBrandList True");
+        } else if (message.contains("GetBrandList False")) {
+            // showMatchHistoryList();
+            Utils.showMessage(activity, activity.getString(R.string.oops_something_went_wrong));
+            STLog.e(TAG, "GetBrandList False");
+            Utils.dismissLoading();
+        } else if (message.equalsIgnoreCase("GetStateList True")) {
+            Utils.dismissLoading();
+            statesArrayList = ModelManager.getInstance().getCommonDataManager().getStates(activity, false);
+            STLog.e(TAG, "GetStateList True");
+        } else if (message.contains("GetStateList False")) {
+            // showMatchHistoryList();
+            Utils.showMessage(activity, activity.getString(R.string.oops_something_went_wrong));
+            STLog.e(TAG, "GetStateList False");
+            Utils.dismissLoading();
+        } else if (message.equalsIgnoreCase("Register True")) {
             Utils.dismissLoading();
             Preferences.writeString(activity, Preferences.EMAIL, et_Email.getText().toString());
             Preferences.writeString(activity, Preferences.PASSWORD, et_Password.getText().toString());
