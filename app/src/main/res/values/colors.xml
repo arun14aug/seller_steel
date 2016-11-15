@@ -26,4 +26,10 @@
     <color name="line_color">#5ED0DF</color>
     <color name="menu_text_color">#D6F9Fc</color>
     <color name="green">#02ca3e</color>
+
+    <color name="k_blue_color">#2298A8</color>
+    <color name="green_color">#3A8901</color>
+    <color name="orange_color">#F87B01</color>
+    <color name="purple_color">#800080</color>
+    <color name="red_color">#D40B01</color>
 </resources>

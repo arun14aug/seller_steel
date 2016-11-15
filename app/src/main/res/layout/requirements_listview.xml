@@ -45,6 +45,7 @@
         android:dividerHeight="10dp"
         android:padding="10dp" />
 
+<!--
     <com.tanzil.steelhub.customUi.MyButton
         android:id="@+id/btn_new_requirement"
         android:layout_width="match_parent"
@@ -54,5 +55,6 @@
         android:textColor="@color/menu_text_color"
         android:textSize="@dimen/large_text_size"
         customfontdemo:fontName="@string/raleway_medium" />
+-->
 
 </LinearLayout>

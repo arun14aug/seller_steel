@@ -97,6 +97,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
-            android:src="@drawable/reply" />
+            android:src="@drawable/reply"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

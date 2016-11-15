@@ -58,7 +58,37 @@ public class RequirementManager {
                                     requirementsArrayList = new ArrayList<>();
                                     for (int i = 0; i < jsonArray.length(); i++) {
 //                                        "response": [{
-//                                        }]
+                                       /** {
+                                            "requirement_id": 37,
+                                                "user_id": 23,
+                                                "quantity": [{
+                                            "size": "10 mm",
+                                                    "quantity": "222"
+                                        }],
+                                            "grade_required": "415",
+                                                "physical": 1,
+                                                "chemical": 1,
+                                                "test_certificate_required": 1,
+                                                "length": 0,
+                                                "type": 0,
+                                                "preffered_brands": ["Rathi"],
+                                            "required_by_date": "18\/11\/2016",
+                                                "budget": 222222,
+                                                "state": "Haryana",
+                                                "city": "dabwali",
+                                                "tax_type": "GST",
+                                                "is_seller_read": 1,
+                                                "initial_amt": 22,
+                                                "is_buyer_read": 0,
+                                                "req_for_bargain": 0,
+                                                "is_seller_read_bargain": 0,
+                                                "is_best_price": 0,
+                                                "bargain_amt": 0,
+                                                "is_buyer_read_bargain": 0,
+                                                "is_accepted": 0,
+                                                "is_seller_deleted": 0,
+                                                "is_buyer_deleted": 0
+                                        },**/
                                         Requirements requirements = new Requirements();
                                         requirements.setRequirement_id(jsonArray.getJSONObject(i).getString("requirement_id"));
                                         requirements.setUser_id(jsonArray.getJSONObject(i).getString("user_id"));
@@ -72,8 +102,18 @@ public class RequirementManager {
                                         requirements.setBudget(jsonArray.getJSONObject(i).getString("budget"));
                                         requirements.setState(jsonArray.getJSONObject(i).getString("state"));
                                         requirements.setCity(jsonArray.getJSONObject(i).getString("city"));
-//                                        requirements.setRequirement_id(jsonArray.getJSONObject(i).getString("created_at"));
-//                                        requirements.setRequirement_id(jsonArray.getJSONObject(i).getString("updated_at"));
+
+                                        requirements.setIs_seller_read(jsonArray.getJSONObject(i).getString("is_seller_read"));
+                                        requirements.setInitial_amt(jsonArray.getJSONObject(i).getString("initial_amt"));
+                                        requirements.setIs_buyer_read(jsonArray.getJSONObject(i).getString("is_buyer_read"));
+                                        requirements.setReq_for_bargain(jsonArray.getJSONObject(i).getString("req_for_bargain"));
+                                        requirements.setIs_seller_read_bargain(jsonArray.getJSONObject(i).getString("is_seller_read_bargain"));
+                                        requirements.setIs_best_price(jsonArray.getJSONObject(i).getString("is_best_price"));
+                                        requirements.setBargain_amt(jsonArray.getJSONObject(i).getString("bargain_amt"));
+                                        requirements.setIs_buyer_read_bargain(jsonArray.getJSONObject(i).getString("is_buyer_read_bargain"));
+                                        requirements.setIs_seller_deleted(jsonArray.getJSONObject(i).getString("is_seller_deleted"));
+                                        requirements.setIs_accepted(jsonArray.getJSONObject(i).getString("is_accepted"));
+                                        requirements.setIs_buyer_deleted(jsonArray.getJSONObject(i).getString("is_buyer_deleted"));
 
                                         if (jsonArray.getJSONObject(i).has("quantity")) {
                                             JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("quantity");
@@ -96,30 +136,6 @@ public class RequirementManager {
                                                     brand[j] = jsonArray1.getString(j);
                                                 }
                                                 requirements.setPreffered_brands(brand);
-                                            }
-                                        }
-                                        if (jsonArray.getJSONObject(i).has("response")) {
-                                            JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("response");
-                                            if (jsonArray1.length() > 0) {
-                                                ArrayList<com.tanzil.steelhub.model.Response> responseArrayList = new ArrayList<>();
-                                                for (int j = 0; j < jsonArray1.length(); j++) {
-                                                    com.tanzil.steelhub.model.Response resp = new com.tanzil.steelhub.model.Response();
-                                                    resp.setSeller_id(jsonArray1.getJSONObject(j).getString("seller_id"));
-                                                    resp.setSeller_name(jsonArray1.getJSONObject(j).getString("seller_name"));
-                                                    resp.setIs_seller_read(jsonArray1.getJSONObject(j).getString("is_seller_read"));
-                                                    resp.setInitial_amt(jsonArray1.getJSONObject(j).getString("initial_amt"));
-                                                    resp.setIs_buyer_read(jsonArray1.getJSONObject(j).getString("is_buyer_read"));
-                                                    resp.setReq_for_bargain(jsonArray1.getJSONObject(j).getString("req_for_bargain"));
-                                                    resp.setIs_seller_read_bargain(jsonArray1.getJSONObject(j).getString("is_seller_read_bargain"));
-                                                    resp.setIs_best_price(jsonArray1.getJSONObject(j).getString("is_best_price"));
-                                                    resp.setBargain_amt(jsonArray1.getJSONObject(j).getString("bargain_amt"));
-                                                    resp.setIs_buyer_read_bargain(jsonArray1.getJSONObject(j).getString("is_buyer_read_bargain"));
-                                                    resp.setIs_seller_deleted(jsonArray1.getJSONObject(j).getString("is_seller_deleted"));
-                                                    resp.setIs_accepted(jsonArray1.getJSONObject(j).getString("is_accepted"));
-                                                    resp.setIs_buyer_deleted(jsonArray1.getJSONObject(j).getString("is_buyer_deleted"));
-                                                    responseArrayList.add(resp);
-                                                }
-                                                requirements.setResponseArrayList(responseArrayList);
                                             }
                                         }
                                         requirementsArrayList.add(requirements);

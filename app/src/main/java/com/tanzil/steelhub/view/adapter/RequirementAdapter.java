@@ -3,11 +3,6 @@ package com.tanzil.steelhub.view.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +13,6 @@ import com.tanzil.steelhub.R;
 import com.tanzil.steelhub.customUi.MyTextView;
 import com.tanzil.steelhub.model.Requirements;
 import com.tanzil.steelhub.utility.Utils;
-import com.tanzil.steelhub.view.fragments.NewRequirementFragment;
 
 import java.util.ArrayList;
 
@@ -77,23 +71,16 @@ public class RequirementAdapter extends BaseAdapter {
 
             viewHolder.txt_date.setText(list.get(position).getRequired_by_date());
 
-            viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.green));
+            if (list.get(position).getIs_accepted().equalsIgnoreCase("1"))
+                viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.green_color));
+            else if (list.get(position).getIs_seller_read().equalsIgnoreCase("0"))
+                viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.red_color));
+            else if (list.get(position).getIs_seller_read_bargain().equalsIgnoreCase("0")
+                    && list.get(position).getReq_for_bargain().equalsIgnoreCase("1"))
+                viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.orange_color));
+            else
+                viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.k_blue_color));
 
-            viewHolder.img_action.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Fragment fragment = new NewRequirementFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("type", "edit");
-                    bundle.putString("id", list.get(position).getRequirement_id());
-                    FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container_body, fragment, "NewRequirementFragment");
-                    fragmentTransaction.addToBackStack("NewRequirementFragment");
-                    fragmentTransaction.commit();
-
-                }
-            });
         } catch (Exception ex) {
             ex.printStackTrace();
         }

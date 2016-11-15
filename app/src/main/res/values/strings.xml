@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SteelHub</string>
+    <string name="app_name">SteelHub S</string>
     <string name="action_settings">Settings</string>
     <string name="tag_line">The Real Steel Dealers</string>
 
@@ -84,6 +84,7 @@
     <string name="straight">Straight</string>
     <string name="bend">Bend</string>
     <string name="preferred_brands">Preferred Brands</string>
+    <string name="brands">Brands</string>
     <string name="required_by_date">Required By Date</string>
     <string name="rate">Rate</string>
     <string name="approx_order_value">Approx Order Value</string>
@@ -115,4 +116,22 @@
     <string name="oops_something_went_wrong">Oops! something went wrong. Please try again later.</string>
     <string name="please_select_an_option">Please select an option</string>
     <string name="coming_soon">Work under progress. We are Coming Soon....</string>
+    <string name="amount">Amount (In Rupees)</string>
+    <string name="bargain_amount">Bargain Amount (In Rupees)</string>
+    <string name="price">Price</string>
+    <string name="show_more">Show More</string>
+    <string name="show_less">Show Less</string>
+    <string name="firm_name">Firm Name</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 1</string>
+    <string name="landmark">Landmark (Optional)</string>
+    <string name="land_line">Landline No.</string>
+    <string name="mobile">Mobile</string>
+    <string name="billing_address">Billing Address</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="place_order">Place Order</string>
+    <string name="action_alert">Are you sure, you want to perform this action?</string>
+    <string name="ok_label">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="req_for_bargain">Request for Bargain?</string>
 </resources>

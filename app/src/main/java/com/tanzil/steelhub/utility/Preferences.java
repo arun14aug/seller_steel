@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  */
 public class Preferences {
 
-    public static final String PREF_NAME = "steelHub";
+    public static final String PREF_NAME = "steelHub_S";
 
 
     public static final int MODE = Context.MODE_PRIVATE;

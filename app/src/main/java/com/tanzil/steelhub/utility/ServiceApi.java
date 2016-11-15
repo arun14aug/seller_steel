@@ -20,7 +20,7 @@ public class ServiceApi {
     public static final String LOGOUT = baseurl + "auth/logout";
 
     public static final String FETCH_STEEL_SIZES = baseurl + "steelsizes";
-    public static final String POSTED_REQUIREMENTS = baseurl + "posted/requirements";
+    public static final String POSTED_REQUIREMENTS = baseurl + "all/requirements";
     public static final String REQUIREMENT_DETAILS = baseurl + "requirement/details";
     public static final String FETCH_BRANDS = baseurl + "brands";
     public static final String FETCH_GRADES = baseurl + "grades";
