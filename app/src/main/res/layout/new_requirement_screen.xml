@@ -33,7 +33,7 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <com.tanzil.steelhub.customUi.MyTextView
+                    <com.seller.steelhub.customUi.MyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -54,7 +54,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyTextView
+                        <com.seller.steelhub.customUi.MyTextView
                             android:id="@+id/txt_diameter"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                             android:textSize="@dimen/new_req_edit_text_size"
                             customfontdemo:fontName="@string/raleway_medium" />
 
-                        <com.tanzil.steelhub.customUi.MyEditText
+                        <com.seller.steelhub.customUi.MyEditText
                             android:id="@+id/et_quantity"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="vertical" />
 
-                    <com.tanzil.steelhub.customUi.MyButton
+                    <com.seller.steelhub.customUi.MyButton
                         android:id="@+id/btn_add_more"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -130,7 +130,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyTextView
+                        <com.seller.steelhub.customUi.MyTextView
                             android:id="@+id/txt_grade_required"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                         android:orientation="horizontal">
 
 
-                        <com.tanzil.steelhub.customUi.MyTextView
+                        <com.seller.steelhub.customUi.MyTextView
                             android:id="@+id/txt_physical"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -196,7 +196,7 @@
                         android:orientation="horizontal">
 
 
-                        <com.tanzil.steelhub.customUi.MyTextView
+                        <com.seller.steelhub.customUi.MyTextView
                             android:id="@+id/txt_chemical"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -226,7 +226,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyTextView
+                        <com.seller.steelhub.customUi.MyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/new_req_edit_text_height"
                             android:layout_gravity="center"
@@ -250,7 +250,7 @@
                             android:orientation="horizontal"
                             android:padding="1dp">
 
-                            <com.tanzil.steelhub.customUi.MyTextView
+                            <com.seller.steelhub.customUi.MyTextView
                                 android:id="@+id/txt_straight"
                                 android:layout_width="60dp"
                                 android:layout_height="wrap_content"
@@ -264,7 +264,7 @@
                                 android:textSize="@dimen/new_req_edit_text_size"
                                 customfontdemo:fontName="@string/raleway_medium" />
 
-                            <com.tanzil.steelhub.customUi.MyTextView
+                            <com.seller.steelhub.customUi.MyTextView
                                 android:id="@+id/txt_bend"
                                 android:layout_width="60dp"
                                 android:layout_height="wrap_content"
@@ -290,7 +290,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyTextView
+                        <com.seller.steelhub.customUi.MyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/new_req_edit_text_height"
                             android:layout_gravity="center"
@@ -314,7 +314,7 @@
                             android:orientation="horizontal"
                             android:padding="1dp">
 
-                            <com.tanzil.steelhub.customUi.MyTextView
+                            <com.seller.steelhub.customUi.MyTextView
                                 android:id="@+id/txt_standard"
                                 android:layout_width="60dp"
                                 android:layout_height="wrap_content"
@@ -328,7 +328,7 @@
                                 android:textSize="@dimen/new_req_edit_text_size"
                                 customfontdemo:fontName="@string/raleway_medium" />
 
-                            <com.tanzil.steelhub.customUi.MyTextView
+                            <com.seller.steelhub.customUi.MyTextView
                                 android:id="@+id/txt_random"
                                 android:layout_width="60dp"
                                 android:layout_height="wrap_content"
@@ -357,7 +357,7 @@
                         android:orientation="horizontal">
 
 
-                        <com.tanzil.steelhub.customUi.MyTextView
+                        <com.seller.steelhub.customUi.MyTextView
                             android:id="@+id/txt_test_certificate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -384,7 +384,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyEditText
+                        <com.seller.steelhub.customUi.MyEditText
                             android:id="@+id/et_preferred_brands"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/new_req_edit_text_height"
@@ -408,7 +408,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyEditText
+                        <com.seller.steelhub.customUi.MyEditText
                             android:id="@+id/et_grade_required"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/new_req_edit_text_height"
@@ -432,7 +432,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyEditText
+                        <com.seller.steelhub.customUi.MyEditText
                             android:id="@+id/et_required_by_date"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/new_req_edit_text_height"
@@ -456,7 +456,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyEditText
+                        <com.seller.steelhub.customUi.MyEditText
                             android:id="@+id/et_city"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/new_req_edit_text_height"
@@ -479,7 +479,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyEditText
+                        <com.seller.steelhub.customUi.MyEditText
                             android:id="@+id/et_state"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/new_req_edit_text_height"
@@ -503,7 +503,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyEditText
+                        <com.seller.steelhub.customUi.MyEditText
                             android:id="@+id/et_budget_amount"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/new_req_edit_text_height"
@@ -526,7 +526,7 @@
                         android:background="@color/colorWhite"
                         android:orientation="horizontal">
 
-                        <com.tanzil.steelhub.customUi.MyEditText
+                        <com.seller.steelhub.customUi.MyEditText
                             android:id="@+id/et_tax_type"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/new_req_edit_text_height"
@@ -553,7 +553,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.tanzil.steelhub.customUi.MyButton
+    <com.seller.steelhub.customUi.MyButton
         android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
