@@ -3,9 +3,9 @@ package com.seller.steelhub.model;
 /**
  * Created by arun.sharma on 9/14/2016.
  */
-public class Quantity {
+public class InitialAmount {
 
-    private String size, quantity;
+    private String size, quantity, amount;
 
     public String getSize() {
         return size;
@@ -22,4 +22,13 @@ public class Quantity {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
 }

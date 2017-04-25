@@ -58,37 +58,61 @@ public class RequirementManager {
                                     requirementsArrayList = new ArrayList<>();
                                     for (int i = 0; i < jsonArray.length(); i++) {
 //                                        "response": [{
-                                       /** {
-                                            "requirement_id": 37,
-                                                "user_id": 23,
-                                                "quantity": [{
-                                            "size": "10 mm",
-                                                    "quantity": "222"
-                                        }],
-                                            "grade_required": "415",
-                                                "physical": 1,
-                                                "chemical": 1,
-                                                "test_certificate_required": 1,
-                                                "length": 0,
-                                                "type": 0,
-                                                "preffered_brands": ["Rathi"],
-                                            "required_by_date": "18\/11\/2016",
-                                                "budget": 222222,
-                                                "state": "Haryana",
-                                                "city": "dabwali",
-                                                "tax_type": "GST",
-                                                "is_seller_read": 1,
-                                                "initial_amt": 22,
-                                                "is_buyer_read": 0,
-                                                "req_for_bargain": 0,
-                                                "is_seller_read_bargain": 0,
-                                                "is_best_price": 0,
-                                                "bargain_amt": 0,
-                                                "is_buyer_read_bargain": 0,
-                                                "is_accepted": 0,
-                                                "is_seller_deleted": 0,
-                                                "is_buyer_deleted": 0
-                                        },**/
+                                        /** {
+                                         "requirement_id": 51,
+                                         "user_id": 23,
+                                         "quantity": [{
+                                         "size": "10 mm",
+                                         "quantity": "20"
+                                         }, {
+                                         "size": "12 mm",
+                                         "quantity": "10"
+                                         }],
+                                         "grade_required": "500D",
+                                         "physical": 1,
+                                         "chemical": 0,
+                                         "test_certificate_required": 1,
+                                         "length": 0,
+                                         "type": 1,
+                                         "preffered_brands": ["Rathi", "Tata Steel", "JSW Steel"],
+                                         "required_by_date": "28\/12\/2016",
+                                         "budget": 700000,
+                                         "state": "Haryana",
+                                         "city": "rewari",
+                                         "tax_type": "VAT",
+                                         "is_seller_read": 1,
+                                         "initial_amt": 200000,
+                                         "is_buyer_read": 1,
+                                         "req_for_bargain": 1,
+                                         "is_seller_read_bargain": 1,
+                                         "is_best_price": 0,
+                                         "bargain_amt": 197900,
+                                         "is_buyer_read_bargain": 1,
+                                         "is_accepted": 0,
+                                         "is_seller_deleted": 0,
+                                         "is_buyer_deleted": 0,
+                                         "initial_unit_price": [{
+                                         "unit price": "5000",
+                                         "size": "10 mm",
+                                         "quantity": "20"
+                                         }, {
+                                         "unit price": "10000",
+                                         "size": "12 mm",
+                                         "quantity": "10"
+                                         }],
+                                         "bargain_unit_price": [{
+                                         "size": "10 mm",
+                                         "quantity": "20",
+                                         "unit price": "5000",
+                                         "new unit price": "4900"
+                                         }, {
+                                         "size": "12 mm",
+                                         "quantity": "10",
+                                         "unit price": "10000",
+                                         "new unit price": "9990"
+                                         }],
+                                         "brands": ["Rathi", "Tata Steel"]
+                                         }**/
                                         Requirements requirements = new Requirements();
                                         requirements.setRequirement_id(jsonArray.getJSONObject(i).getString("requirement_id"));
                                         requirements.setUser_id(jsonArray.getJSONObject(i).getString("user_id"));
@@ -128,6 +152,40 @@ public class RequirementManager {
                                                 requirements.setQuantityArrayList(quantities);
                                             }
                                         }
+                                        if (!jsonArray.getJSONObject(i).getString("initial_amt").equalsIgnoreCase("0"))
+                                            if (jsonArray.getJSONObject(i).has("initial_unit_price") && !jsonArray.getJSONObject(i).isNull("initial_unit_price")) {
+                                                JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("initial_unit_price");
+                                                if (jsonArray1.length() > 0) {
+                                                    ArrayList<InitialAmount> quantities = new ArrayList<>();
+                                                    for (int j = 0; j < jsonArray1.length(); j++) {
+                                                        InitialAmount quantity = new InitialAmount();
+                                                        quantity.setSize(jsonArray1.getJSONObject(j).getString("size"));
+                                                        quantity.setQuantity(jsonArray1.getJSONObject(j).getString("quantity"));
+                                                        if (jsonArray1.getJSONObject(j).has("unit price"))
+                                                            quantity.setAmount(jsonArray1.getJSONObject(j).getString("unit price"));
+                                                        quantities.add(quantity);
+                                                    }
+                                                    requirements.setInitialAmountArrayList(quantities);
+                                                }
+                                            }
+                                        if (!jsonArray.getJSONObject(i).getString("bargain_amt").equalsIgnoreCase("0"))
+                                            if (jsonArray.getJSONObject(i).has("bargain_unit_price")&& !jsonArray.getJSONObject(i).isNull("bargain_unit_price")) {
+                                                JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("bargain_unit_price");
+                                                if (jsonArray1.length() > 0) {
+                                                    ArrayList<BargainAmount> quantities = new ArrayList<>();
+                                                    for (int j = 0; j < jsonArray1.length(); j++) {
+                                                        BargainAmount quantity = new BargainAmount();
+                                                        quantity.setSize(jsonArray1.getJSONObject(j).getString("size"));
+                                                        quantity.setQuantity(jsonArray1.getJSONObject(j).getString("quantity"));
+                                                        if (jsonArray1.getJSONObject(j).has("unit price"))
+                                                            quantity.setAmount(jsonArray1.getJSONObject(j).getString("unit price"));
+                                                        if (jsonArray1.getJSONObject(j).has("new unit price"))
+                                                            quantity.setBargain_amount(jsonArray1.getJSONObject(j).getString("new unit price"));
+                                                        quantities.add(quantity);
+                                                    }
+                                                    requirements.setBargainAmountArrayList(quantities);
+                                                }
+                                            }
                                         if (jsonArray.getJSONObject(i).has("preffered_brands")) {
                                             JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("preffered_brands");
                                             if (jsonArray1.length() > 0) {

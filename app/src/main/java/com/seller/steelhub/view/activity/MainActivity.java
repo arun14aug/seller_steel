@@ -29,7 +29,6 @@ import com.seller.steelhub.utility.Utils;
 import com.seller.steelhub.view.fragments.ChangePasswordFragment;
 import com.seller.steelhub.view.fragments.ContactUsFragment;
 import com.seller.steelhub.view.fragments.HistoryFragment;
-import com.seller.steelhub.view.fragments.NewRequirementFragment;
 import com.seller.steelhub.view.fragments.RequirementFragment;
 
 import org.json.JSONException;
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.requirements);
                 break;
             case 1:
-                fragment = new NewRequirementFragment();
+//                fragment = new NewRequirementFragment();
                 title = getString(R.string.title_new_requirement);
                 break;
             case 2:
@@ -197,8 +196,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         try {
             if (f instanceof RequirementFragment) {
                 title = getString(R.string.requirements);
-            } else if (f instanceof NewRequirementFragment) {
-                title = getString(R.string.title_new_requirement);
             } else if (f instanceof HistoryFragment) {
                 title = getString(R.string.title_history);
             } else if (f instanceof ChangePasswordFragment) {

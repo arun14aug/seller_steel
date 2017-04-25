@@ -3,9 +3,7 @@
     android:id="@+id/row_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginTop="5dp"
+    android:layout_margin="5dp"
     android:background="@color/colorWhite"
     android:orientation="horizontal">
 
@@ -53,19 +51,36 @@
         android:hint="@string/amount"
         android:inputType="numberDecimal"
         android:padding="7dp"
-        android:visibility="gone"
         android:textColor="@color/dark_grey"
         android:textSize="@dimen/new_req_edit_text_size"
+        android:visibility="gone"
         customfontdemo:fontName="@string/raleway_medium" />
 
-    <ImageView
-        android:id="@+id/remove"
-        android:layout_width="wrap_content"
+    <com.seller.steelhub.customUi.MyEditText
+        android:id="@+id/bargain_amount"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:contentDescription="@string/accept"
-        android:padding="5dp"
-        android:src="@drawable/reply"
-        android:visibility="visible" />
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/rounded_corner_bg"
+        android:gravity="start|center_vertical"
+        android:hint="@string/bargain_amount"
+        android:inputType="numberDecimal"
+        android:padding="7dp"
+        android:textColor="@color/dark_grey"
+        android:textSize="@dimen/new_req_edit_text_size"
+        android:visibility="gone"
+        customfontdemo:fontName="@string/raleway_medium" />
+
+    <!--<ImageView-->
+        <!--android:id="@+id/remove"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:contentDescription="@string/accept"-->
+        <!--android:padding="5dp"-->
+        <!--android:src="@drawable/reply"-->
+        <!--android:visibility="visible" />-->
 
 </LinearLayout>

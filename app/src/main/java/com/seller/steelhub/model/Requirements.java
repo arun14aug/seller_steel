@@ -7,14 +7,16 @@ import java.util.ArrayList;
  */
 public class Requirements {
 
-    String requirement_id, user_id, grade_required, physical, chemical, test_certificate_required,
+    private String requirement_id, user_id, grade_required, physical, chemical, test_certificate_required,
             length, type, required_by_date, budget, state, city, created_at, updated_at;
-    String is_seller_read, initial_amt, is_buyer_read, req_for_bargain, is_seller_read_bargain, is_best_price,
+    private String is_seller_read, initial_amt, is_buyer_read, req_for_bargain, is_seller_read_bargain, is_best_price,
             bargain_amt, is_buyer_read_bargain, is_accepted, is_seller_deleted, is_buyer_deleted;
-    ArrayList<Response> responseArrayList;
+    private ArrayList<Response> responseArrayList;
 
-    String[] preffered_brands;
-    ArrayList<Quantity> quantityArrayList;
+    private String[] preffered_brands;
+    private ArrayList<Quantity> quantityArrayList;
+    private ArrayList<InitialAmount> initialAmountArrayList;
+    private ArrayList<BargainAmount> bargainAmountArrayList;
 
     public ArrayList<Response> getResponseArrayList() {
         return responseArrayList;
@@ -150,6 +152,22 @@ public class Requirements {
 
     public void setQuantityArrayList(ArrayList<Quantity> quantityArrayList) {
         this.quantityArrayList = quantityArrayList;
+    }
+
+    public ArrayList<InitialAmount> getInitialAmountArrayList() {
+        return initialAmountArrayList;
+    }
+
+    public void setInitialAmountArrayList(ArrayList<InitialAmount> initialAmountArrayList) {
+        this.initialAmountArrayList = initialAmountArrayList;
+    }
+
+    public ArrayList<BargainAmount> getBargainAmountArrayList() {
+        return bargainAmountArrayList;
+    }
+
+    public void setBargainAmountArrayList(ArrayList<BargainAmount> bargainAmountArrayList) {
+        this.bargainAmountArrayList = bargainAmountArrayList;
     }
 
     public String getIs_seller_read() {

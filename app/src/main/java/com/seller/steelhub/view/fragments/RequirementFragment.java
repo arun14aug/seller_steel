@@ -84,8 +84,10 @@ public class RequirementFragment extends Fragment {
         if (requirementsArrayList == null) {
             Utils.showLoading(activity, activity.getString(R.string.please_wait));
             ModelManager.getInstance().getRequirementManager().getRequirements(activity, true);
-        } else
+        } else {
             setData();
+            ModelManager.getInstance().getRequirementManager().getRequirements(activity, true);
+        }
         return rootView;
     }
 
