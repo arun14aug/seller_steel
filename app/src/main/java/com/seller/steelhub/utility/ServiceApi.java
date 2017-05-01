@@ -5,7 +5,7 @@ package com.seller.steelhub.utility;
  */
 public class ServiceApi {
 
-    public static final String baseurl = "http://mysteelhub.com/"; //staging..
+    private static final String baseurl = "http://mysteelhub.com/"; //staging..
 
 
     // Users Family
@@ -30,4 +30,5 @@ public class ServiceApi {
     public static final String FETCH_STATES = baseurl + "states";
     public static final String FETCH_TAX_TYPES = baseurl + "tax/types";
     public static final String FETCH_CUSTOMER_TYPE = baseurl + "customer/types";
+    public static final String GET_PROFILE = baseurl + "getProfile";
 }

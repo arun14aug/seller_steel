@@ -29,6 +29,7 @@ import com.seller.steelhub.utility.Utils;
 import com.seller.steelhub.view.fragments.ChangePasswordFragment;
 import com.seller.steelhub.view.fragments.ContactUsFragment;
 import com.seller.steelhub.view.fragments.HistoryFragment;
+import com.seller.steelhub.view.fragments.ProfileFragment;
 import com.seller.steelhub.view.fragments.RequirementFragment;
 
 import org.json.JSONException;
@@ -95,18 +96,18 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new RequirementFragment();
                 title = getString(R.string.requirements);
                 break;
+//            case 1:
+////                fragment = new NewRequirementFragment();
+//                title = getString(R.string.title_new_requirement);
+//                break;
             case 1:
-//                fragment = new NewRequirementFragment();
-                title = getString(R.string.title_new_requirement);
-                break;
-            case 2:
                 fragment = new HistoryFragment();
                 title = getString(R.string.title_history);
                 break;
-//            case 3:
-//                fragment = new ProfileFragment();
-//                title = getString(R.string.title_profile);
-//                break;
+            case 2:
+                fragment = new ProfileFragment();
+                title = getString(R.string.title_profile);
+                break;
             case 3:
                 fragment = new ChangePasswordFragment();
                 title = getString(R.string.title_change_pass);
@@ -200,6 +201,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.title_history);
             } else if (f instanceof ChangePasswordFragment) {
                 title = getString(R.string.title_change_pass);
+            } else if (f instanceof ProfileFragment) {
+                title = getString(R.string.title_profile);
             } else if (f instanceof ContactUsFragment) {
                 title = getString(R.string.title_contact_us);
             }
