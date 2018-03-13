@@ -1,6 +1,25 @@
 package com.seller.steelhub.model;
 
+import android.app.Activity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.seller.steelhub.utility.Preferences;
+import com.seller.steelhub.utility.STLog;
+import com.seller.steelhub.utility.ServiceApi;
+import com.seller.steelhub.utility.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by arun.sharma on 9/14/2016.
@@ -14,9 +33,18 @@ public class Requirements {
     private ArrayList<Response> responseArrayList;
 
     private String[] preffered_brands;
+    private String[] customer_type;
     private ArrayList<Quantity> quantityArrayList;
     private ArrayList<InitialAmount> initialAmountArrayList;
     private ArrayList<BargainAmount> bargainAmountArrayList;
+
+    public String[] getCustomer_type() {
+        return customer_type;
+    }
+
+    public void setCustomer_type(String[] customer_type) {
+        this.customer_type = customer_type;
+    }
 
     public ArrayList<Response> getResponseArrayList() {
         return responseArrayList;
@@ -257,4 +285,42 @@ public class Requirements {
     public void setIs_buyer_deleted(String is_buyer_deleted) {
         this.is_buyer_deleted = is_buyer_deleted;
     }
+
+    public void updateConversationStatus(final Activity activity, JSONObject jsonObject) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, ServiceApi.UPDATE_CONVERSATION_STATUS, jsonObject,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        STLog.e("Success Response : ", "Response: " + response.toString());
+
+                        try {
+                            boolean state = response.getBoolean("success");
+                            if (state) {
+                                EventBus.getDefault().postSticky("UpdateConversationStatus True");
+                            } else {
+                                EventBus.getDefault().postSticky("UpdateConversationStatus False@#@" + response.getString("msg"));
+                            }
+                        } catch (JSONException e) {
+                            EventBus.getDefault().postSticky("UpdateConversationStatus False");
+                        }
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                STLog.e("Error Response : ", "Error: " + error.getMessage());
+                EventBus.getDefault().postSticky("UpdateConversationStatus False");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", "Bearer" + Preferences.readString(activity, Preferences.USER_TOKEN, ""));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Utils.getVolleyRequestQueue(activity);
+        requestQueue.add(jsonObjReq);
+    }
+
 }

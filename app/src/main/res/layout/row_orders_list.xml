@@ -13,83 +13,98 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
+        android:layout_weight="1"
         android:background="@color/colorWhite"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="10dp">
 
-        <com.seller.steelhub.customUi.MyTextView
-            android:id="@+id/txt_city"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/zip"
-            android:drawablePadding="3dp"
-            android:drawableStart="@drawable/zip"
-            android:ellipsize="end"
-            android:gravity="start|center_vertical"
-            android:maxLength="9"
-            android:maxLines="1"
-            android:text="@string/quantity"
-            android:textColor="@color/dark_grey"
-            android:textSize="@dimen/medium_text_size"
-            customfontdemo:fontName="@string/raleway_medium" />
+            android:orientation="horizontal">
 
-        <com.seller.steelhub.customUi.MyTextView
-            android:id="@+id/txt_state"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/mm"
-            android:drawablePadding="3dp"
-            android:drawableStart="@drawable/mm"
-            android:ellipsize="end"
-            android:gravity="start|center_vertical"
-            android:maxLength="9"
-            android:maxLines="1"
-            android:text="@string/quantity"
-            android:textColor="@color/dark_grey"
-            android:textSize="@dimen/medium_text_size"
-            customfontdemo:fontName="@string/raleway_medium" />
+            <com.seller.steelhub.customUi.MyTextView
+                android:id="@+id/txt_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/zip"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/zip"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:maxLength="9"
+                android:maxLines="1"
+                android:text="@string/quantity"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/medium_text_size"
+                customfontdemo:fontName="@string/raleway_medium" />
 
-        <com.seller.steelhub.customUi.MyTextView
-            android:id="@+id/txt_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/date"
-            android:drawablePadding="3dp"
-            android:drawableStart="@drawable/date"
-            android:gravity="start|center_vertical"
-            android:text="@string/quantity"
-            android:textColor="@color/dark_grey"
-            android:textSize="@dimen/small_text_size"
-            customfontdemo:fontName="@string/raleway_medium" />
+            <com.seller.steelhub.customUi.MyTextView
+                android:id="@+id/txt_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/mm"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/mm"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:maxLength="9"
+                android:maxLines="1"
+                android:text="@string/quantity"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/medium_text_size"
+                customfontdemo:fontName="@string/raleway_medium" />
+        </LinearLayout>
 
-        <com.seller.steelhub.customUi.MyTextView
-            android:id="@+id/txt_budget"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:gravity="end|center_vertical"
-            android:paddingEnd="5dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="5dp"
-            android:paddingStart="3dp"
-            android:text="@string/quantity"
-            android:textColor="@color/dark_grey"
-            android:textSize="@dimen/small_text_size"
-            customfontdemo:fontName="@string/raleway_medium" />
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.seller.steelhub.customUi.MyTextView
+                android:id="@+id/txt_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/date"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/date"
+                android:gravity="start|center_vertical"
+                android:text="@string/quantity"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/small_text_size"
+                customfontdemo:fontName="@string/raleway_medium" />
+
+            <com.seller.steelhub.customUi.MyTextView
+                android:id="@+id/txt_budget"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="5dp"
+                android:paddingStart="3dp"
+                android:text="@string/quantity"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/small_text_size"
+                customfontdemo:fontName="@string/raleway_medium" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/img_action"
@@ -99,5 +114,45 @@
             android:padding="5dp"
             android:src="@drawable/reply"
             android:visibility="gone" />
+
+        <com.seller.steelhub.customUi.MyTextView
+            android:id="@+id/txt_buyer_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp"
+            android:text="@string/submit"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/small_text_size"
+            customfontdemo:fontName="@string/raleway_medium" />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <com.seller.steelhub.customUi.MyTextView
+            android:id="@+id/txt_status"
+            android:layout_width="37dp"
+            android:layout_height="45dp"
+            android:background="@drawable/green_bubble"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/very_small_text_size"
+            customfontdemo:fontName="@string/raleway_medium" />
+
+    </LinearLayout>
+
 </LinearLayout>

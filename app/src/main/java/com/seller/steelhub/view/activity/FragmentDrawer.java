@@ -1,12 +1,15 @@
 package com.seller.steelhub.view.activity;
 
-/**
+/*
  * Created by Ravi on 29/07/15.
  */
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,10 +20,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.seller.steelhub.R;
 import com.seller.steelhub.model.NavDrawerItem;
+import com.seller.steelhub.utility.Preferences;
 import com.seller.steelhub.view.adapter.NavigationDrawerAdapter;
+import com.seller.steelhub.view.fragments.ProfileFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +37,8 @@ public class FragmentDrawer extends Fragment {
 
     private static String TAG = FragmentDrawer.class.getSimpleName();
 
-    private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private NavigationDrawerAdapter adapter;
     private View containerView;
     private static String[] titles = null;
     private FragmentDrawerListener drawerListener;
@@ -51,9 +56,9 @@ public class FragmentDrawer extends Fragment {
 
 
         // preparing navigation drawer items
-        for (int i = 0; i < titles.length; i++) {
+        for (String title : titles) {
             NavDrawerItem navItem = new NavDrawerItem();
-            navItem.setTitle(titles[i]);
+            navItem.setTitle(title);
             data.add(navItem);
         }
         return data;
@@ -68,13 +73,21 @@ public class FragmentDrawer extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+        TextView txt_user = layout.findViewById(R.id.txt_user);
+        TextView txt_email = layout.findViewById(R.id.txt_email);
 
-        adapter = new NavigationDrawerAdapter(getActivity(), getData());
+        LinearLayout layout_profile = layout.findViewById(R.id.layout_profile);
+
+        txt_email.setText(Preferences.readString(getActivity(), Preferences.EMAIL, ""));
+        txt_user.setText(Preferences.readString(getActivity(), Preferences.USER_NAME, ""));
+
+        RecyclerView recyclerView = layout.findViewById(R.id.drawerList);
+
+        NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
@@ -89,6 +102,19 @@ public class FragmentDrawer extends Fragment {
 
             }
         }));
+
+        layout_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ProfileFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment, "ProfileFragment");
+                fragmentTransaction.addToBackStack("ProfileFragment");
+                fragmentTransaction.commit();
+                mDrawerLayout.closeDrawer(containerView);
+            }
+        });
 
         return layout;
     }
@@ -127,10 +153,10 @@ public class FragmentDrawer extends Fragment {
 
     }
 
-    public static interface ClickListener {
-        public void onClick(View view, int position);
+    public interface ClickListener {
+        void onClick(View view, int position);
 
-        public void onLongClick(View view, int position);
+        void onLongClick(View view, int position);
     }
 
     static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
@@ -138,7 +164,7 @@ public class FragmentDrawer extends Fragment {
         private GestureDetector gestureDetector;
         private ClickListener clickListener;
 
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
+        RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
             this.clickListener = clickListener;
             gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                 @Override
@@ -179,6 +205,6 @@ public class FragmentDrawer extends Fragment {
     }
 
     public interface FragmentDrawerListener {
-        public void onDrawerItemSelected(View view, int position);
+        void onDrawerItemSelected(View view, int position);
     }
 }

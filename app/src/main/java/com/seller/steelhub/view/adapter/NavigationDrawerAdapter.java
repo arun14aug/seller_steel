@@ -5,6 +5,7 @@ package com.seller.steelhub.view.adapter;
  */
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     private LayoutInflater inflater;
 //    private Context context;
     private Integer[] icons = {R.drawable.home_icon/*, R.drawable.new_requirement*/,
-            R.drawable.new_orders, /*R.drawable.manage_address,*/ R.drawable.contact_us,
+            R.drawable.new_orders, /*R.drawable.manage_address, R.drawable.contact_us,*/
             R.drawable.change_psd, R.drawable.contact_us,
             R.drawable.logout_icon};
 
@@ -39,14 +40,15 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         notifyItemRemoved(position);
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.nav_drawer_row, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         NavDrawerItem current = data.get(position);
         holder.title.setText(current.getTitle());
         holder.ic_option.setImageResource(icons[position]);
@@ -63,8 +65,8 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
 
         MyViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            ic_option = (ImageView) itemView.findViewById(R.id.icon_menu_option);
+            title = itemView.findViewById(R.id.title);
+            ic_option = itemView.findViewById(R.id.icon_menu_option);
         }
     }
 }

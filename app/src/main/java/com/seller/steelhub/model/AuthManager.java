@@ -49,6 +49,7 @@ public class AuthManager {
     }
 
     public void logIn(final Activity activity, JSONObject post_data) {
+        STLog.e("JSON : ", post_data.toString());
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, ServiceApi.LOGIN, post_data,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -225,7 +226,8 @@ public class AuthManager {
     }
 
     public void logout(final Activity activity, JSONObject jsonObject) {
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, ServiceApi.LOGOUT, jsonObject,
+        STLog.e("JSON : ", jsonObject.toString());
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE, ServiceApi.LOGOUT, jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -234,7 +236,7 @@ public class AuthManager {
                         try {
                             boolean state = response.getBoolean("success");
                             if (state) {
-                                Preferences.writeBoolean(activity, Preferences.LOGIN, true);
+                                Preferences.writeBoolean(activity, Preferences.LOGIN, false);
 
                                 EventBus.getDefault().postSticky("Logout True");
                             } else {

@@ -196,6 +196,16 @@ public class RequirementManager {
                                                 requirements.setPreffered_brands(brand);
                                             }
                                         }
+                                        if (jsonArray.getJSONObject(i).has("customer_type")) {
+                                            JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("customer_type");
+                                            if (jsonArray1.length() > 0) {
+                                                String[] type = new String[jsonArray1.length()];
+                                                for (int j = 0; j < jsonArray1.length(); j++) {
+                                                    type[j] = jsonArray1.getString(j);
+                                                }
+                                                requirements.setCustomer_type(type);
+                                            }
+                                        }
                                         requirementsArrayList.add(requirements);
                                     }
                                 }

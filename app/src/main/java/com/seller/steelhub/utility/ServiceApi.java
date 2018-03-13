@@ -31,4 +31,16 @@ public class ServiceApi {
     public static final String FETCH_TAX_TYPES = baseurl + "tax/types";
     public static final String FETCH_CUSTOMER_TYPE = baseurl + "customer/types";
     public static final String GET_PROFILE = baseurl + "getProfile";
+
+
+    // global topic to receive app wide push notifications
+    public static final String TOPIC_GLOBAL = "global";
+
+    // broadcast receiver intent filters
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
+    public static final String PUSH_NOTIFICATION = "pushNotification";
+
+    // id to handle the notification in the notification tray
+    static final int NOTIFICATION_ID = 100;
+    static final int NOTIFICATION_ID_BIG_IMAGE = 101;
 }

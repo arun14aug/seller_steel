@@ -45,18 +45,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private FragmentManager fragmentManager;
     private boolean backer = false;
     private MyTextView tvTitle;
+    public static MainActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        instance = MainActivity.this;
+
         LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(
                 mHeaderReceiver, new IntentFilter("Header"));
 
         fragmentManager = getSupportFragmentManager();
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        tvTitle = (MyTextView) findViewById(R.id.header_text);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        tvTitle = findViewById(R.id.header_text);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -104,15 +107,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new HistoryFragment();
                 title = getString(R.string.title_history);
                 break;
+//            case 2:
+//                fragment = new ProfileFragment();
+//                title = getString(R.string.title_profile);
+//                break;
             case 2:
-                fragment = new ProfileFragment();
-                title = getString(R.string.title_profile);
-                break;
-            case 3:
                 fragment = new ChangePasswordFragment();
                 title = getString(R.string.title_change_pass);
                 break;
-            case 4:
+            case 3:
                 fragment = new ContactUsFragment();
                 title = getString(R.string.title_contact_us);
                 break;
@@ -120,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 //                fragment = new SettingsFragment();
 //                title = getString(R.string.title_settings);
 //                break;
-            case 5:
-                showAlert(MainActivity.this, "Are you sure, you want to log out?");
+            case 4:
+                showAlert(MainActivity.this);
                 break;
             default:
                 break;
@@ -138,11 +141,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
     }
 
-    public void showAlert(Activity activity, String msg) {
+    public void showAlert(final Activity activity) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
         alertDialogBuilder
                 .setTitle("Logout!")
-                .setMessage(msg)
+                .setMessage("Are you sure, you want to log out?")
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -150,7 +153,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         JSONObject jsonObject = new JSONObject();
                         try {
                             jsonObject.put("device_type", "android");
-                            jsonObject.put("device_token", ModelManager.getInstance().getAuthManager().getDeviceToken());
+//                            jsonObject.put("role", "seller");
+                            jsonObject.put("device_token", Preferences.readString(activity, Preferences.DEVICE_ID, ""));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

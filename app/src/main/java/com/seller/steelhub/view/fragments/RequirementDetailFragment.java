@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
@@ -25,6 +26,10 @@ import com.seller.steelhub.model.Quantity;
 import com.seller.steelhub.model.Requirements;
 import com.seller.steelhub.utility.STLog;
 import com.seller.steelhub.utility.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -51,7 +56,7 @@ public class RequirementDetailFragment extends Fragment implements View.OnClickL
 //    private ArrayList<Response> responseArrayList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.activity = super.getActivity();
         Intent intent = new Intent("Header");
@@ -71,39 +76,39 @@ public class RequirementDetailFragment extends Fragment implements View.OnClickL
         }
 
 
-        et_budget_amount = (MyEditText) rootView.findViewById(R.id.et_budget_amount);
-//        et_quantity = (MyEditText) rootView.findViewById(R.id.et_quantity);
-//        txt_diameter = (MyTextView) rootView.findViewById(R.id.txt_diameter);
-        et_preferred_brands = (MyEditText) rootView.findViewById(R.id.et_preferred_brands);
-        et_grade_required = (MyEditText) rootView.findViewById(R.id.et_grade_required);
-        et_city = (MyEditText) rootView.findViewById(R.id.et_city);
-        et_state = (MyEditText) rootView.findViewById(R.id.et_state);
-        et_tax_type = (MyEditText) rootView.findViewById(R.id.et_tax_type);
-        et_required_by_date = (MyEditText) rootView.findViewById(R.id.et_required_by_date);
-        et_amount = (MyEditText) rootView.findViewById(R.id.et_amount);
-        et_bargain_amount = (MyEditText) rootView.findViewById(R.id.et_bargain_amount);
+        et_budget_amount = rootView.findViewById(R.id.et_budget_amount);
+//        et_quantity = rootView.findViewById(R.id.et_quantity);
+//        txt_diameter =  rootView.findViewById(R.id.txt_diameter);
+        et_preferred_brands = rootView.findViewById(R.id.et_preferred_brands);
+        et_grade_required = rootView.findViewById(R.id.et_grade_required);
+        et_city = rootView.findViewById(R.id.et_city);
+        et_state = rootView.findViewById(R.id.et_state);
+        et_tax_type = rootView.findViewById(R.id.et_tax_type);
+        et_required_by_date = rootView.findViewById(R.id.et_required_by_date);
+        et_amount = rootView.findViewById(R.id.et_amount);
+        et_bargain_amount = rootView.findViewById(R.id.et_bargain_amount);
 
-        MyTextView txt_random = (MyTextView) rootView.findViewById(R.id.txt_random);
-        MyTextView txt_standard = (MyTextView) rootView.findViewById(R.id.txt_standard);
-        MyTextView txt_bend = (MyTextView) rootView.findViewById(R.id.txt_bend);
-        MyTextView txt_straight = (MyTextView) rootView.findViewById(R.id.txt_straight);
+        MyTextView txt_random =  rootView.findViewById(R.id.txt_random);
+        MyTextView txt_standard =  rootView.findViewById(R.id.txt_standard);
+        MyTextView txt_bend =  rootView.findViewById(R.id.txt_bend);
+        MyTextView txt_straight =  rootView.findViewById(R.id.txt_straight);
 
 //        layout_show_more = (LinearLayout) rootView.findViewById(R.id.layout_show_more);
 //        layout_seller_list = (LinearLayout) rootView.findViewById(R.id.layout_seller_list);
-        layout_amount = (LinearLayout) rootView.findViewById(R.id.layout_amount);
-        layout_bargain_amount = (LinearLayout) rootView.findViewById(R.id.layout_bargain_amount);
-        addMoreLayout = (LinearLayout) rootView.findViewById(R.id.layout_add_more);
-        LinearLayout layout_bargain_allowed = (LinearLayout) rootView.findViewById(R.id.layout_bargain_allowed);
+        layout_amount = rootView.findViewById(R.id.layout_amount);
+        layout_bargain_amount = rootView.findViewById(R.id.layout_bargain_amount);
+        addMoreLayout = rootView.findViewById(R.id.layout_add_more);
+        LinearLayout layout_bargain_allowed = rootView.findViewById(R.id.layout_bargain_allowed);
 
-        ic_physical = (ImageView) rootView.findViewById(R.id.ic_physical);
-        ic_chemical = (ImageView) rootView.findViewById(R.id.ic_chemical);
-//        ic_grade_required = (ImageView) rootView.findViewById(R.id.ic_grade_required);
-        ic_test_certificate = (ImageView) rootView.findViewById(R.id.ic_test_certificate);
-        ic_bargain_allowed = (ImageView) rootView.findViewById(R.id.ic_bargain_allowed);
+        ic_physical = rootView.findViewById(R.id.ic_physical);
+        ic_chemical = rootView.findViewById(R.id.ic_chemical);
+//        ic_grade_required = rootView.findViewById(R.id.ic_grade_required);
+        ic_test_certificate = rootView.findViewById(R.id.ic_test_certificate);
+        ic_bargain_allowed = rootView.findViewById(R.id.ic_bargain_allowed);
 
 //        btn_show_more = (MyButton) rootView.findViewById(R.id.btn_show_more);
 //        btn_show_more.setTransformationMethod(null);
-        btn_submit = (MyButton) rootView.findViewById(R.id.btn_submit);
+        btn_submit = rootView.findViewById(R.id.btn_submit);
         btn_submit.setTransformationMethod(null);
 
         btn_submit.setOnClickListener(this);
@@ -167,15 +172,15 @@ public class RequirementDetailFragment extends Fragment implements View.OnClickL
                 et_bargain_amount.setFocusable(false);
 
                 String[] preferredBrands = requirementsArrayList.get(i).getPreffered_brands();
-                String val = "";
+                StringBuilder val = new StringBuilder();
                 if (preferredBrands != null)
                     if (preferredBrands.length > 0) {
                         for (String preferredBrand : preferredBrands)
-                            val = val + preferredBrand + ", ";
+                            val.append(preferredBrand).append(", ");
                     }
                 if (val.length() > 0)
-                    val = val.substring(0, val.length() - 2);
-                et_preferred_brands.setText(val);
+                    val = new StringBuilder(val.substring(0, val.length() - 2));
+                et_preferred_brands.setText(val.toString());
 
                 setList(requirementsArrayList, i);
 
@@ -192,10 +197,10 @@ public class RequirementDetailFragment extends Fragment implements View.OnClickL
                     LayoutInflater layoutInflater =
                             (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     final View addView = layoutInflater.inflate(R.layout.row_add_more, null);
-                    MyEditText quantity = (MyEditText) addView.findViewById(R.id.quantity);
-                    MyTextView diameter = (MyTextView) addView.findViewById(R.id.diameter);
-                    MyEditText amount = (MyEditText) addView.findViewById(R.id.amount);
-                    MyEditText bargain_amount = (MyEditText) addView.findViewById(R.id.bargain_amount);
+                    MyEditText quantity = addView.findViewById(R.id.quantity);
+                    MyTextView diameter =  addView.findViewById(R.id.diameter);
+                    MyEditText amount = addView.findViewById(R.id.amount);
+                    MyEditText bargain_amount = addView.findViewById(R.id.bargain_amount);
 
                     quantity.setFocusable(false);
                     amount.setFocusable(true);
@@ -267,20 +272,36 @@ public class RequirementDetailFragment extends Fragment implements View.OnClickL
 //                {
 //                    "size": "10mm",
 //                        "quantity":"500",
-//                        "unit price":"2000"
+//                        "unit price":"2000",
+//                       “new unit price”:”1900”
 //                },
 //                {
 //                    "size": "10mm",
 //                        "quantity":"500",
-//                        "unit price":"2500"
+//                        "unit price":"2500",
+//                       “new unit price”:”1950”
+//
 //                }
 //
-//                ],
-//                "buyer_id":"19",
+//             ],
+//                "buyer_id": "23",
 //                    "requirement_id":"1",
-//                    "type":"sellerQuotation",
-//                    "initial_amt":"500000"
+//                    "type":"sellerAcceptOrNot",
+//                    "bargain_amt":"49000",
+//                    "is_best_price":"0"
 //            }
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("buyer_id", "");
+                    jsonObject.put("requirement_id", "");
+                    jsonObject.put("type", "");
+                    jsonObject.put("bargain_amt", "");
+                    jsonObject.put("is_best_price", "");
+                    JSONArray jsonArray = new JSONArray();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
