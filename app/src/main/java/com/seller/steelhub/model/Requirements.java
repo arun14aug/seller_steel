@@ -29,7 +29,7 @@ public class Requirements {
     private String requirement_id, user_id, grade_required, physical, chemical, test_certificate_required,
             length, type, required_by_date, budget, state, city, created_at, updated_at;
     private String is_seller_read, initial_amt, is_buyer_read, req_for_bargain, is_seller_read_bargain, is_best_price,
-            bargain_amt, is_buyer_read_bargain, is_accepted, is_seller_deleted, is_buyer_deleted;
+            bargain_amt, is_buyer_read_bargain, is_accepted, is_seller_deleted, is_buyer_deleted, tax_type;
     private ArrayList<Response> responseArrayList;
 
     private String[] preffered_brands;
@@ -37,6 +37,14 @@ public class Requirements {
     private ArrayList<Quantity> quantityArrayList;
     private ArrayList<InitialAmount> initialAmountArrayList;
     private ArrayList<BargainAmount> bargainAmountArrayList;
+
+    public String getTax_type() {
+        return tax_type;
+    }
+
+    public void setTax_type(String tax_type) {
+        this.tax_type = tax_type;
+    }
 
     public String[] getCustomer_type() {
         return customer_type;
@@ -286,7 +294,7 @@ public class Requirements {
         this.is_buyer_deleted = is_buyer_deleted;
     }
 
-    public void updateConversationStatus(final Activity activity, JSONObject jsonObject) {
+    public void updateConversationStatus(final Activity activity, JSONObject jsonObject, final String token) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, ServiceApi.UPDATE_CONVERSATION_STATUS, jsonObject,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
@@ -296,12 +304,12 @@ public class Requirements {
                         try {
                             boolean state = response.getBoolean("success");
                             if (state) {
-                                EventBus.getDefault().postSticky("UpdateConversationStatus True");
+                                EventBus.getDefault().postSticky(token + " True");
                             } else {
-                                EventBus.getDefault().postSticky("UpdateConversationStatus False@#@" + response.getString("msg"));
+                                EventBus.getDefault().postSticky(token + " False@#@" + response.getString("msg"));
                             }
                         } catch (JSONException e) {
-                            EventBus.getDefault().postSticky("UpdateConversationStatus False");
+                            EventBus.getDefault().postSticky(token + " False");
                         }
                     }
                 }, new com.android.volley.Response.ErrorListener() {
@@ -309,7 +317,7 @@ public class Requirements {
             @Override
             public void onErrorResponse(VolleyError error) {
                 STLog.e("Error Response : ", "Error: " + error.getMessage());
-                EventBus.getDefault().postSticky("UpdateConversationStatus False");
+                EventBus.getDefault().postSticky(token + "UpdateConversationStatus False");
             }
         }) {
             @Override
@@ -323,4 +331,41 @@ public class Requirements {
         requestQueue.add(jsonObjReq);
     }
 
+    public void readBuyerPost(final Activity activity, JSONObject jsonObject) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, ServiceApi.UPDATE_CONVERSATION_STATUS, jsonObject,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        STLog.e("Success Response : ", "Response: " + response.toString());
+
+                        try {
+                            boolean state = response.getBoolean("success");
+                            if (state) {
+                                Requirements.this.setIs_seller_read("1");
+                                EventBus.getDefault().postSticky("ReadPost True");
+                            } else {
+                                EventBus.getDefault().postSticky("ReadPost False@#@" + response.getString("msg"));
+                            }
+                        } catch (JSONException e) {
+                            EventBus.getDefault().postSticky("ReadPost False");
+                        }
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                STLog.e("Error Response : ", "Error: " + error.getMessage());
+                EventBus.getDefault().postSticky("ReadPost False");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", "Bearer" + Preferences.readString(activity, Preferences.USER_TOKEN, ""));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Utils.getVolleyRequestQueue(activity);
+        requestQueue.add(jsonObjReq);
+    }
 }

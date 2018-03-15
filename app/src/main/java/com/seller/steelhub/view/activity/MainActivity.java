@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
 
+        ModelManager.getInstance().getAuthManager().getProfile(MainActivity.this, true);
+
         // display the first navigation drawer view on app launch
         displayView(0);
     }
@@ -239,13 +241,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             startActivity(new Intent(MainActivity.this, LoginScreen.class));
             finish();
         } else if (message.contains("Logout False")) {
-            // showMatchHistoryList();
             Utils.showMessage(MainActivity.this, "Please check your credentials!");
             STLog.e(TAG, "Logout False");
-            Utils.dismissLoading();
-        } else if (message.equalsIgnoreCase("Logout Network Error")) {
-            Utils.showMessage(MainActivity.this, "Network Error! Please try again");
-            STLog.e(TAG, "Logout Network Error");
             Utils.dismissLoading();
         }
 

@@ -44,6 +44,7 @@ public class Utils {
     public static void showLoading(Activity act, String msg) {
         progressDialog = ProgressDialog
                 .show(act, "", msg, true);
+        progressDialog.setCancelable(true);
     }
 
     public static void dismissLoading() {
@@ -141,7 +142,7 @@ public class Utils {
     }
 
     public static int setColor(Activity activity, int color) {
-        if (android.os.Build.VERSION.SDK_INT < 23) {
+        if (Build.VERSION.SDK_INT < 23) {
             return activity.getResources().getColor(color);
 
         } else {

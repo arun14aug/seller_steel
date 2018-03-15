@@ -402,7 +402,6 @@ public class SignUpScreen extends Activity implements View.OnClickListener {
             brandsArrayList = ModelManager.getInstance().getCommonDataManager().getBrands(activity, false);
             STLog.e(TAG, "GetBrandList True");
         } else if (message.contains("GetBrandList False")) {
-            // showMatchHistoryList();
             Utils.showMessage(activity, activity.getString(R.string.oops_something_went_wrong));
             STLog.e(TAG, "GetBrandList False");
             Utils.dismissLoading();
@@ -411,7 +410,6 @@ public class SignUpScreen extends Activity implements View.OnClickListener {
             statesArrayList = ModelManager.getInstance().getCommonDataManager().getStates(activity, false);
             STLog.e(TAG, "GetStateList True");
         } else if (message.contains("GetStateList False")) {
-            // showMatchHistoryList();
             Utils.showMessage(activity, activity.getString(R.string.oops_something_went_wrong));
             STLog.e(TAG, "GetStateList False");
             Utils.dismissLoading();
@@ -423,13 +421,8 @@ public class SignUpScreen extends Activity implements View.OnClickListener {
             startActivity(new Intent(activity, MainActivity.class));
             finish();
         } else if (message.contains("Register False")) {
-            // showMatchHistoryList();
             Utils.showMessage(activity, "Please check your credentials!");
             STLog.e(TAG, "Register False");
-            Utils.dismissLoading();
-        } else if (message.equalsIgnoreCase("Register Network Error")) {
-            Utils.showMessage(activity, "Network Error! Please try again");
-            STLog.e(TAG, "Register Network Error");
             Utils.dismissLoading();
         }
 

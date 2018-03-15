@@ -13,6 +13,7 @@ import com.seller.steelhub.utility.STLog;
 import com.seller.steelhub.utility.ServiceApi;
 import com.seller.steelhub.utility.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -313,16 +314,16 @@ public class AuthManager {
                                 user.setBrand(jsonObject.getString("brand"));
                                 user.setExp_quantity(jsonObject.getString("exp_quantity"));
 
-//                                if (jsonObject.has("preffered_brands")) {
-//                                    JSONArray jsonArray1 = jsonObject.getJSONArray("preffered_brands");
-//                                    if (jsonArray1.length() > 0) {
-//                                        String[] brand = new String[jsonArray1.length()];
-//                                        for (int j = 0; j < jsonArray1.length(); j++) {
-//                                            brand[j] = jsonArray1.getString(j);
-//                                        }
-//                                        user.setPreffered_brands(brand);
-//                                    }
-//                                }
+                                if (jsonObject.has("preffered_brands")) {
+                                    JSONArray jsonArray1 = jsonObject.getJSONArray("preffered_brands");
+                                    if (jsonArray1.length() > 0) {
+                                        String[] brand = new String[jsonArray1.length()];
+                                        for (int j = 0; j < jsonArray1.length(); j++) {
+                                            brand[j] = jsonArray1.getString(j);
+                                        }
+                                        user.setPreffered_brands(brand);
+                                    }
+                                }
                                 userArrayList.add(user);
                                 EventBus.getDefault().post(token + " True");
                             } else

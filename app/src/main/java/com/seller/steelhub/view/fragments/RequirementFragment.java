@@ -1,12 +1,13 @@
 package com.seller.steelhub.view.fragments;
 
-/**
+/*
  * Created by arun.sharma on 29/07/15.
  */
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -38,7 +39,7 @@ public class RequirementFragment extends Fragment {
     private ListView listView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.activity = super.getActivity();
         Intent intent = new Intent("Header");
@@ -47,7 +48,7 @@ public class RequirementFragment extends Fragment {
         LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
         View rootView = inflater.inflate(R.layout.requirements_listview, container, false);
 
-        listView = (ListView) rootView.findViewById(R.id.list_requirements);
+        listView = rootView.findViewById(R.id.list_requirements);
 
 //        MyButton btn_new_requirement = (MyButton) rootView.findViewById(R.id.btn_new_requirement);
 //        btn_new_requirement.setTransformationMethod(null);
@@ -71,6 +72,7 @@ public class RequirementFragment extends Fragment {
                 Fragment fragment = new RequirementDetailFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("id", requirementsArrayList.get(i).getRequirement_id());
+                bundle.putInt("index", i);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -86,7 +88,7 @@ public class RequirementFragment extends Fragment {
             ModelManager.getInstance().getRequirementManager().getRequirements(activity, true);
         } else {
             setData();
-            ModelManager.getInstance().getRequirementManager().getRequirements(activity, true);
+//            ModelManager.getInstance().getRequirementManager().getRequirements(activity, true);
         }
         return rootView;
     }
@@ -125,14 +127,8 @@ public class RequirementFragment extends Fragment {
                 Utils.showMessage(activity, activity.getString(R.string.no_record_found));
             STLog.e(TAG, "GetRequirements True");
         } else if (message.contains("GetRequirements False")) {
-            // showMatchHistoryList();
             Utils.showMessage(activity, activity.getString(R.string.oops_something_went_wrong));
             STLog.e(TAG, "GetRequirements False");
-            Utils.dismissLoading();
-        } else if (message.contains("GetRequirements Network Error")) {
-            // showMatchHistoryList();
-            Utils.showMessage(activity, activity.getString(R.string.oops_something_went_wrong));
-            STLog.e(TAG, "GetRequirements Network Error");
             Utils.dismissLoading();
         }
 

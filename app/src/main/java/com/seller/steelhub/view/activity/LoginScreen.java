@@ -128,17 +128,12 @@ public class LoginScreen extends Activity implements View.OnClickListener {
             startActivity(new Intent(activity, MainActivity.class));
             finish();
         } else if (message.contains("Login False")) {
-            // showMatchHistoryList();
             String[] msg = message.split("@#@");
             if (msg.length > 1)
                 Utils.showMessage(activity, msg[1]);
             else
                 Utils.showMessage(activity, "Please check your credentials!");
             STLog.e(TAG, "Login False");
-            Utils.dismissLoading();
-        } else if (message.equalsIgnoreCase("Login Network Error")) {
-            Utils.showMessage(activity, "Network Error! Please try again");
-            STLog.e(TAG, "Login Network Error");
             Utils.dismissLoading();
         }
 

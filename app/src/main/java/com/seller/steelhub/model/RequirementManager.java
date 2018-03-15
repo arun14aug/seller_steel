@@ -138,6 +138,7 @@ public class RequirementManager {
                                         requirements.setIs_seller_deleted(jsonArray.getJSONObject(i).getString("is_seller_deleted"));
                                         requirements.setIs_accepted(jsonArray.getJSONObject(i).getString("is_accepted"));
                                         requirements.setIs_buyer_deleted(jsonArray.getJSONObject(i).getString("is_buyer_deleted"));
+                                        requirements.setTax_type(jsonArray.getJSONObject(i).getString("tax_type"));
 
                                         if (jsonArray.getJSONObject(i).has("quantity")) {
                                             JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("quantity");
@@ -236,43 +237,5 @@ public class RequirementManager {
         requestQueue.add(jsonObjReq);
     }
 
-    public void addBuyerPost(final Activity activity, JSONObject jsonObject) {
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, ServiceApi.BUYER_POST, jsonObject,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        STLog.e("Success Response : ", "Response: " + response.toString());
-
-                        try {
-                            boolean state = response.getBoolean("success");
-                            if (state) {
-                                Preferences.writeBoolean(activity, Preferences.LOGIN, true);
-
-                                EventBus.getDefault().postSticky("NewRequirementPosted True");
-                            } else {
-                                EventBus.getDefault().postSticky("NewRequirementPosted False@#@" + response.getString("msg"));
-                            }
-                        } catch (JSONException e) {
-                            EventBus.getDefault().postSticky("NewRequirementPosted False");
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                STLog.e("Error Response : ", "Error: " + error.getMessage());
-                EventBus.getDefault().postSticky("NewRequirementPosted False");
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", "Bearer" + Preferences.readString(activity, Preferences.USER_TOKEN, ""));
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Utils.getVolleyRequestQueue(activity);
-        requestQueue.add(jsonObjReq);
-    }
 
 }
