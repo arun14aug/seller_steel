@@ -11,6 +11,7 @@
     <color name="red">#ff0000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="light_grey">#c5c5c7</color>
 
     <color name="login_start_color">#0095A5</color>
     <color name="login_end_color">#028391</color>

@@ -36,11 +36,11 @@ public class RequirementManager {
         return requirementsArrayList;
     }
 
-    public void getRequirementList(final Activity activity) {
+    private void getRequirementList(final Activity activity) {
         JSONObject jsonObject = new JSONObject();
         try {
-//            jsonObject.put("user_id", Preferences.readString(activity, Preferences.USER_ID, ""));
-            jsonObject.put("user_id", "23");
+            jsonObject.put("user_id", Preferences.readString(activity, Preferences.USER_ID, ""));
+//            jsonObject.put("user_id", "23");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -141,70 +141,98 @@ public class RequirementManager {
                                         requirements.setTax_type(jsonArray.getJSONObject(i).getString("tax_type"));
 
                                         if (jsonArray.getJSONObject(i).has("quantity")) {
-                                            JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("quantity");
-                                            if (jsonArray1.length() > 0) {
-                                                ArrayList<Quantity> quantities = new ArrayList<>();
-                                                for (int j = 0; j < jsonArray1.length(); j++) {
-                                                    Quantity quantity = new Quantity();
-                                                    quantity.setSize(jsonArray1.getJSONObject(j).getString("size"));
-                                                    quantity.setQuantity(jsonArray1.getJSONObject(j).getString("quantity"));
-                                                    quantities.add(quantity);
+                                            Object item = jsonArray.getJSONObject(i).get("quantity");
+                                            if (item instanceof JSONArray) {
+                                                JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("quantity");
+                                                if (jsonArray1.length() > 0) {
+                                                    ArrayList<Quantity> quantities = new ArrayList<>();
+                                                    for (int j = 0; j < jsonArray1.length(); j++) {
+                                                        Quantity quantity = new Quantity();
+                                                        quantity.setSize(jsonArray1.getJSONObject(j).getString("size"));
+                                                        quantity.setQuantity(jsonArray1.getJSONObject(j).getString("quantity"));
+                                                        quantities.add(quantity);
+                                                    }
+                                                    requirements.setQuantityArrayList(quantities);
                                                 }
-                                                requirements.setQuantityArrayList(quantities);
                                             }
                                         }
                                         if (!jsonArray.getJSONObject(i).getString("initial_amt").equalsIgnoreCase("0"))
                                             if (jsonArray.getJSONObject(i).has("initial_unit_price") && !jsonArray.getJSONObject(i).isNull("initial_unit_price")) {
-                                                JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("initial_unit_price");
-                                                if (jsonArray1.length() > 0) {
-                                                    ArrayList<InitialAmount> quantities = new ArrayList<>();
-                                                    for (int j = 0; j < jsonArray1.length(); j++) {
-                                                        InitialAmount quantity = new InitialAmount();
-                                                        quantity.setSize(jsonArray1.getJSONObject(j).getString("size"));
-                                                        quantity.setQuantity(jsonArray1.getJSONObject(j).getString("quantity"));
-                                                        if (jsonArray1.getJSONObject(j).has("unit price"))
-                                                            quantity.setAmount(jsonArray1.getJSONObject(j).getString("unit price"));
-                                                        quantities.add(quantity);
+                                                Object item = jsonArray.getJSONObject(i).get("initial_unit_price");
+                                                if (item instanceof JSONArray) {
+                                                    JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("initial_unit_price");
+                                                    if (jsonArray1.length() > 0) {
+                                                        ArrayList<InitialAmount> quantities = new ArrayList<>();
+                                                        for (int j = 0; j < jsonArray1.length(); j++) {
+                                                            InitialAmount quantity = new InitialAmount();
+                                                            quantity.setSize(jsonArray1.getJSONObject(j).getString("size"));
+                                                            quantity.setQuantity(jsonArray1.getJSONObject(j).getString("quantity"));
+                                                            if (jsonArray1.getJSONObject(j).has("unit price"))
+                                                                quantity.setAmount(jsonArray1.getJSONObject(j).getString("unit price"));
+                                                            quantities.add(quantity);
+                                                        }
+                                                        requirements.setInitialAmountArrayList(quantities);
                                                     }
-                                                    requirements.setInitialAmountArrayList(quantities);
                                                 }
                                             }
                                         if (!jsonArray.getJSONObject(i).getString("bargain_amt").equalsIgnoreCase("0"))
                                             if (jsonArray.getJSONObject(i).has("bargain_unit_price")&& !jsonArray.getJSONObject(i).isNull("bargain_unit_price")) {
-                                                JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("bargain_unit_price");
-                                                if (jsonArray1.length() > 0) {
-                                                    ArrayList<BargainAmount> quantities = new ArrayList<>();
-                                                    for (int j = 0; j < jsonArray1.length(); j++) {
-                                                        BargainAmount quantity = new BargainAmount();
-                                                        quantity.setSize(jsonArray1.getJSONObject(j).getString("size"));
-                                                        quantity.setQuantity(jsonArray1.getJSONObject(j).getString("quantity"));
-                                                        if (jsonArray1.getJSONObject(j).has("unit price"))
-                                                            quantity.setAmount(jsonArray1.getJSONObject(j).getString("unit price"));
-                                                        if (jsonArray1.getJSONObject(j).has("new unit price"))
-                                                            quantity.setBargain_amount(jsonArray1.getJSONObject(j).getString("new unit price"));
-                                                        quantities.add(quantity);
+                                                Object item = jsonArray.getJSONObject(i).get("bargain_unit_price");
+                                                if (item instanceof JSONArray) {
+                                                    JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("bargain_unit_price");
+                                                    if (jsonArray1.length() > 0) {
+                                                        ArrayList<BargainAmount> quantities = new ArrayList<>();
+                                                        for (int j = 0; j < jsonArray1.length(); j++) {
+                                                            BargainAmount quantity = new BargainAmount();
+                                                            quantity.setSize(jsonArray1.getJSONObject(j).getString("size"));
+                                                            quantity.setQuantity(jsonArray1.getJSONObject(j).getString("quantity"));
+                                                            if (jsonArray1.getJSONObject(j).has("unit price"))
+                                                                quantity.setAmount(jsonArray1.getJSONObject(j).getString("unit price"));
+                                                            if (jsonArray1.getJSONObject(j).has("new unit price"))
+                                                                quantity.setBargain_amount(jsonArray1.getJSONObject(j).getString("new unit price"));
+                                                            quantities.add(quantity);
+                                                        }
+                                                        requirements.setBargainAmountArrayList(quantities);
                                                     }
-                                                    requirements.setBargainAmountArrayList(quantities);
                                                 }
                                             }
                                         if (jsonArray.getJSONObject(i).has("preffered_brands")) {
-                                            JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("preffered_brands");
-                                            if (jsonArray1.length() > 0) {
-                                                String[] brand = new String[jsonArray1.length()];
-                                                for (int j = 0; j < jsonArray1.length(); j++) {
-                                                    brand[j] = jsonArray1.getString(j);
+                                            Object item = jsonArray.getJSONObject(i).get("preffered_brands");
+                                            if (item instanceof JSONArray) {
+                                                JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("preffered_brands");
+                                                if (jsonArray1.length() > 0) {
+                                                    String[] brand = new String[jsonArray1.length()];
+                                                    for (int j = 0; j < jsonArray1.length(); j++) {
+                                                        brand[j] = jsonArray1.getString(j);
+                                                    }
+                                                    requirements.setPreffered_brands(brand);
                                                 }
-                                                requirements.setPreffered_brands(brand);
+                                            }
+                                        }
+                                        if (jsonArray.getJSONObject(i).has("brands")) {
+                                            Object item = jsonArray.getJSONObject(i).get("brands");
+                                            if (item instanceof JSONArray) {
+                                                JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("brands");
+                                                if (jsonArray1.length() > 0) {
+                                                    String[] brand = new String[jsonArray1.length()];
+                                                    for (int j = 0; j < jsonArray1.length(); j++) {
+                                                        brand[j] = jsonArray1.getString(j);
+                                                    }
+                                                    requirements.setBrands(brand);
+                                                }
                                             }
                                         }
                                         if (jsonArray.getJSONObject(i).has("customer_type")) {
-                                            JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("customer_type");
-                                            if (jsonArray1.length() > 0) {
-                                                String[] type = new String[jsonArray1.length()];
-                                                for (int j = 0; j < jsonArray1.length(); j++) {
-                                                    type[j] = jsonArray1.getString(j);
+                                            Object item = jsonArray.getJSONObject(i).get("customer_type");
+                                            if (item instanceof JSONArray) {
+                                                JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONArray("customer_type");
+                                                if (jsonArray1.length() > 0) {
+                                                    String[] type = new String[jsonArray1.length()];
+                                                    for (int j = 0; j < jsonArray1.length(); j++) {
+                                                        type[j] = jsonArray1.getString(j);
+                                                    }
+                                                    requirements.setCustomer_type(type);
                                                 }
-                                                requirements.setCustomer_type(type);
                                             }
                                         }
                                         requirementsArrayList.add(requirements);
@@ -237,5 +265,42 @@ public class RequirementManager {
         requestQueue.add(jsonObjReq);
     }
 
+    public void deletePost(final Activity activity, JSONObject jsonObject) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, ServiceApi.DELETE_POST, jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        STLog.e("Success Response : ", "Response: " + response.toString());
+
+                        try {
+                            boolean state = response.getBoolean("success");
+                            if (state) {
+
+                                EventBus.getDefault().postSticky("DeletePost True");
+                            } else {
+                                EventBus.getDefault().postSticky("DeletePost False@#@" + response.getString("msg"));
+                            }
+                        } catch (JSONException e) {
+                            EventBus.getDefault().postSticky("DeletePost False");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                STLog.e("Error Response : ", "Error: " + error.getMessage());
+                EventBus.getDefault().postSticky("DeletePost False");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", "Bearer" + Preferences.readString(activity, Preferences.USER_TOKEN, ""));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Utils.getVolleyRequestQueue(activity);
+        requestQueue.add(jsonObjReq);
+    }
 
 }

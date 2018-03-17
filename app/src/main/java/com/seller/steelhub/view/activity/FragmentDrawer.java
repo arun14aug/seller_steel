@@ -24,7 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.seller.steelhub.R;
+import com.seller.steelhub.model.ModelManager;
 import com.seller.steelhub.model.NavDrawerItem;
+import com.seller.steelhub.model.User;
 import com.seller.steelhub.utility.Preferences;
 import com.seller.steelhub.view.adapter.NavigationDrawerAdapter;
 import com.seller.steelhub.view.fragments.ProfileFragment;
@@ -82,8 +84,14 @@ public class FragmentDrawer extends Fragment {
 
         LinearLayout layout_profile = layout.findViewById(R.id.layout_profile);
 
-        txt_email.setText(Preferences.readString(getActivity(), Preferences.EMAIL, ""));
-        txt_user.setText(Preferences.readString(getActivity(), Preferences.USER_NAME, ""));
+        User user = ModelManager.getInstance().getAuthManager().getUser();
+        if (user != null) {
+            txt_email.setText(user.getEmail());
+            txt_user.setText(user.getName());
+        } else {
+            txt_email.setText(Preferences.readString(getActivity(), Preferences.EMAIL, ""));
+            txt_user.setText(Preferences.readString(getActivity(), Preferences.USER_NAME, ""));
+        }
 
         RecyclerView recyclerView = layout.findViewById(R.id.drawerList);
 

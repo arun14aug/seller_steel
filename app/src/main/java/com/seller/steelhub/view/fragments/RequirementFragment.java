@@ -5,6 +5,8 @@ package com.seller.steelhub.view.fragments;
  */
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,14 +19,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.seller.steelhub.R;
 import com.seller.steelhub.model.ModelManager;
 import com.seller.steelhub.model.Requirements;
+import com.seller.steelhub.utility.Preferences;
 import com.seller.steelhub.utility.STLog;
 import com.seller.steelhub.utility.Utils;
 import com.seller.steelhub.view.adapter.RequirementAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -82,6 +89,14 @@ public class RequirementFragment extends Fragment {
             }
         });
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                showDialog(requirementsArrayList.get(i).getRequirement_id(), requirementsArrayList.get(i).getUser_id());
+                return true;
+            }
+        });
+
         requirementsArrayList = ModelManager.getInstance().getRequirementManager().getRequirements(activity, false);
         if (requirementsArrayList == null) {
             Utils.showLoading(activity, activity.getString(R.string.please_wait));
@@ -90,7 +105,43 @@ public class RequirementFragment extends Fragment {
             setData();
 //            ModelManager.getInstance().getRequirementManager().getRequirements(activity, true);
         }
+        STLog.e("User Token :", Preferences.readString(activity, Preferences.USER_TOKEN, ""));
         return rootView;
+    }
+
+    private void showDialog(final String id, final String buyer_id) {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(activity);
+//        builderSingle.setIcon(R.drawable.ic_launcher);
+        builderSingle.setTitle("Choose Action");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                activity,
+                android.R.layout.simple_list_item_1);
+        arrayAdapter.add("Delete");
+
+        builderSingle.setAdapter(
+                arrayAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+
+                            jsonObject.put("requirement_id", id);
+                            jsonObject.put("seller_id", Preferences.readString(activity, Preferences.USER_ID, ""));
+                            jsonObject.put("buyer_id", buyer_id);
+                            jsonObject.put("Is_seller_deleted", "1");
+                            jsonObject.put("Is_buyer_deleted", "0");
+                            jsonObject.put("type", "seller");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        STLog.e("JSON : ", jsonObject.toString());
+                        Utils.showLoading(activity, activity.getString(R.string.please_wait));
+                        ModelManager.getInstance().getRequirementManager().deletePost(activity, jsonObject);
+                    }
+                });
+        builderSingle.show();
     }
 
     private void setData() {
@@ -129,6 +180,16 @@ public class RequirementFragment extends Fragment {
         } else if (message.contains("GetRequirements False")) {
             Utils.showMessage(activity, activity.getString(R.string.oops_something_went_wrong));
             STLog.e(TAG, "GetRequirements False");
+            Utils.dismissLoading();
+        } else if (message.equalsIgnoreCase("DeletePost True")) {
+            Utils.dismissLoading();
+            Utils.showLoading(activity, activity.getString(R.string.please_wait));
+            ModelManager.getInstance().getRequirementManager().getRequirements(activity, true);
+            STLog.e(TAG, "DeletePost True");
+        } else if (message.contains("DeletePost False")) {
+            // showMatchHistoryList();
+            Utils.showMessage(activity, activity.getString(R.string.oops_something_went_wrong));
+            STLog.e(TAG, "DeletePost False");
             Utils.dismissLoading();
         }
 

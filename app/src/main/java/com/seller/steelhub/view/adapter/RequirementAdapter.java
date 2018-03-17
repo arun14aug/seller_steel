@@ -95,6 +95,30 @@ public class RequirementAdapter extends BaseAdapter {
                 viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.orange_color));
                 viewHolder.txt_status.setBackgroundResource(R.drawable.orange_purple_bubble);
                 viewHolder.txt_status.setText("Order Posted");
+            } else if (list.get(position).getReq_for_bargain().equalsIgnoreCase("0")
+                    && !Utils.isEmptyString(list.get(position).getInitial_amt())){
+                viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.orange_color));
+                viewHolder.txt_status.setBackgroundResource(R.drawable.orange_purple_bubble);
+                viewHolder.txt_status.setText("Quote Posted");
+            } else if (list.get(position).getReq_for_bargain().equalsIgnoreCase("1")
+                    && !Utils.isEmptyString(list.get(position).getInitial_amt())
+                    && Utils.isEmptyString(list.get(position).getIs_buyer_read_bargain())){
+                if (!Utils.isEmptyString(list.get(position).getIs_seller_read_bargain())
+                        && list.get(position).getIs_accepted().equalsIgnoreCase("0")
+                        && !Utils.isEmptyString(list.get(position).getBargain_amt())) {
+                    viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.k_blue_color));
+                    viewHolder.txt_status.setBackgroundResource(R.drawable.sky_bubble);
+                    viewHolder.txt_status.setText("Bargain Done");
+                } else {
+                    viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.purple_color));
+                    viewHolder.txt_status.setBackgroundResource(R.drawable.purple_bubble);
+                    viewHolder.txt_status.setText("Bargain Pending");
+                }
+            } else if (list.get(position).getIs_seller_read().equalsIgnoreCase("1")
+                    && Utils.isEmptyString(list.get(position).getInitial_amt())){
+                viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.standard_end_color));
+                viewHolder.txt_status.setBackgroundResource(R.drawable.blue_bubble);
+                viewHolder.txt_status.setText("Quote Required");
             } else{
                 viewHolder.color_view.setBackgroundColor(Utils.setColor(activity, R.color.k_blue_color));
                 viewHolder.txt_status.setBackgroundResource(R.drawable.sky_bubble);

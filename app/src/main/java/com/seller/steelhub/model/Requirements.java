@@ -33,10 +33,19 @@ public class Requirements {
     private ArrayList<Response> responseArrayList;
 
     private String[] preffered_brands;
+    private String[] brands;
     private String[] customer_type;
     private ArrayList<Quantity> quantityArrayList;
     private ArrayList<InitialAmount> initialAmountArrayList;
     private ArrayList<BargainAmount> bargainAmountArrayList;
+
+    public String[] getBrands() {
+        return brands;
+    }
+
+    public void setBrands(String[] brands) {
+        this.brands = brands;
+    }
 
     public String getTax_type() {
         return tax_type;

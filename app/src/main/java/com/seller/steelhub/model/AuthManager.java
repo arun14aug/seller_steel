@@ -32,6 +32,15 @@ public class AuthManager {
     private String deviceToken;
     private String userToken;
     private ArrayList<User> userArrayList;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getUserToken() {
         return userToken;
@@ -295,6 +304,8 @@ public class AuthManager {
 //                                        "exp_quantity": "10000",
                                 User user = new User();
                                 user.setId(jsonObject.getString("id"));
+                                Preferences.writeString(activity, Preferences.USER_ID, jsonObject.getString("id"));
+                                Preferences.writeString(activity, Preferences.USER_NAME, jsonObject.getString("name"));
                                 user.setName(jsonObject.getString("name"));
                                 user.setEmail(jsonObject.getString("email"));
                                 user.setCustomer_type(jsonObject.getString("customer_type"));
@@ -314,8 +325,8 @@ public class AuthManager {
                                 user.setBrand(jsonObject.getString("brand"));
                                 user.setExp_quantity(jsonObject.getString("exp_quantity"));
 
-                                if (jsonObject.has("preffered_brands")) {
-                                    JSONArray jsonArray1 = jsonObject.getJSONArray("preffered_brands");
+                                if (jsonObject.has("brand")) {
+                                    JSONArray jsonArray1 = jsonObject.getJSONArray("brand");
                                     if (jsonArray1.length() > 0) {
                                         String[] brand = new String[jsonArray1.length()];
                                         for (int j = 0; j < jsonArray1.length(); j++) {
@@ -324,6 +335,7 @@ public class AuthManager {
                                         user.setPreffered_brands(brand);
                                     }
                                 }
+                                setUser(user);
                                 userArrayList.add(user);
                                 EventBus.getDefault().post(token + " True");
                             } else
