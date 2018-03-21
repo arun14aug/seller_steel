@@ -285,23 +285,6 @@ public class AuthManager {
                                 JSONObject jsonObject = response.getJSONObject("data");
                                 userArrayList = new ArrayList<>();
 
-//                                "id": 23,
-//                                        "name": "buyer",
-//                                        "email": "buyer@gmail.com",
-//                                        "customer_type": "",
-//                                        "company_name": "ambuja",
-//                                        "contact": 9087789909,
-//                                        "address": "8phase",
-//                                        "state": "punjab",
-//                                        "city": "mohali",
-//                                        "latitude": "8789787878",
-//                                        "longitude": "66777787878",
-//                                        "role": "buyer",
-//                                        "zip": 189768,
-//                                        "tin": "5455",
-//                                        "pan": "455654467",
-//                                        "brand": null,
-//                                        "exp_quantity": "10000",
                                 User user = new User();
                                 user.setId(jsonObject.getString("id"));
                                 Preferences.writeString(activity, Preferences.USER_ID, jsonObject.getString("id"));
